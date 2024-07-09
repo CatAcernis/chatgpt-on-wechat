@@ -97,6 +97,7 @@ class ChatChannel(Channel):
                 return None
 
             nick_name_black_list = conf().get("nick_name_black_list", [])
+            nick_name_white_list = conf().get("nick_name_white_list", [])
             if context.get("isgroup", False):  # 群聊
                 # 校验关键字
                 match_prefix = check_prefix(content, conf().get("group_chat_prefix"))
@@ -114,7 +115,6 @@ class ChatChannel(Channel):
                             logger.warning(f"[chat_channel] Nickname {nick_name} in In BlackList, ignore")
                             return None
                         # if nick name not in white list, ignore
-                        nick_name_white_list = conf().get("nick_name_white_list", [])
                         if nick_name_white_list and nick_name not in nick_name_white_list:
                             logger.warning(f"[chat_channel] Nickname {nick_name} not in WhiteList, ignore")
                             return None
@@ -142,6 +142,10 @@ class ChatChannel(Channel):
                 if nick_name and nick_name in nick_name_black_list:
                     # 黑名单过滤
                     logger.warning(f"[chat_channel] Nickname '{nick_name}' in In BlackList, ignore")
+                    return None
+                # if nick name not in white list, ignore
+                if nick_name_white_list and nick_name not in nick_name_white_list:
+                    logger.warning(f"[chat_channel] Nickname '{nick_name}' not in WhiteList, ignore")
                     return None
 
                 match_prefix = check_prefix(content, conf().get("single_chat_prefix", [""]))
