@@ -104,11 +104,11 @@ class ChatChannel(Channel):
                 logger.info("nickname: " + nick_name)
                 if nick_name and nick_name in nick_name_black_list:
                     # 黑名单过滤
-                    logger.warning(f"[chat_channel] Nickname {nick_name} in In BlackList, ignore")
+                    logger.warning(f"[chat_channel] Nickname '{nick_name}' in In BlackList, ignore")
                     return None
                 # if nick name not in white list, ignore
                 if nick_name and nick_name not in nick_name_white_list:
-                    logger.warning(f"[chat_channel] Nickname {nick_name} not in WhiteList, ignore")
+                    logger.warning(f"[chat_channel] Nickname '{nick_name}' not in WhiteList, ignore")
                     return None
 
                 # 校验关键字
