@@ -99,8 +99,18 @@ class ChatChannel(Channel):
             nick_name_black_list = conf().get("nick_name_black_list", [])
             nick_name_white_list = conf().get("nick_name_white_list", [])
             if context.get("isgroup", False):  # 群聊
+
                 nick_name = context["msg"].actual_user_nickname
                 logger.info("nickname: " + nick_name)
+                if nick_name and nick_name in nick_name_black_list:
+                    # 黑名单过滤
+                    logger.warning(f"[chat_channel] Nickname {nick_name} in In BlackList, ignore")
+                    return None
+                # if nick name not in white list, ignore
+                if nick_name and nick_name not in nick_name_white_list:
+                    logger.warning(f"[chat_channel] Nickname {nick_name} not in WhiteList, ignore")
+                    return None
+
                 # 校验关键字
                 match_prefix = check_prefix(content, conf().get("group_chat_prefix"))
                 match_contain = check_contain(content, conf().get("group_chat_keyword"))
