@@ -118,6 +118,7 @@ class ChatChannel(Channel):
                         if nick_name and nick_name not in nick_name_white_list:
                             logger.warning(f"[chat_channel] Nickname {nick_name} not in WhiteList, ignore")
                             return None
+
                         logger.info("[chat_channel]receive group at")
                         if not conf().get("group_at_off", False):
                             flag = True
